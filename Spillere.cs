@@ -15,8 +15,6 @@ namespace Ludo
                 this.SpillereId = id;
                 this.navn = spillernavn;
             }
-
-
         
         //spillernes farve
         public static string SpilleFarve(Farve farve)
