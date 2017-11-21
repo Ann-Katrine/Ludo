@@ -5,21 +5,23 @@ namespace Ludo
 {
     class Spillere
     {
+        
         private int SpillereId;
         private string navn;
-        private enum SpilleFarve {Gul, Grøn, Blå, rød};
+        private colors clr;
 
         // ny spiller
-        public Spillere(int id, string spillernavn)
-            {
-                this.SpillereId = id;
-                this.navn = spillernavn;
-            }
+        public Spillere(int id, string spillernavn, colors farve)
+        {
+            this.SpillereId = id;
+            this.navn = spillernavn;
+            this.clr = farve;
+        }
         
         //spillernes farve
-        public static string SpilleFarve(Farve farve)
+        /*public string Farve(String farve)
         {
-            switch(Farve)
+            switch(farve)
             {
                 case Farve.Gul:
                     return "gul";
@@ -30,10 +32,11 @@ namespace Ludo
                 case Farve.Rød:
                     return "Rød";
             }
-        }
+         }*/  
+    }
             
         
           
         
-    }
+    
 }
