@@ -8,6 +8,8 @@ namespace Ludo
        public Spil()
         {
             Console.WriteLine("Velkommen til Ludo");
+
+            Console.ReadKey();
         }   
 
 

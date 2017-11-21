@@ -5,3 +5,7 @@ C:\Users\Sde03873\source\repos\Ludo\bin\Debug\Ludo.exe
 C:\Users\Sde03873\source\repos\Ludo\bin\Debug\Ludo.pdb
 C:\Users\Sde03873\source\repos\Ludo\obj\Debug\Ludo.exe
 C:\Users\Sde03873\source\repos\Ludo\obj\Debug\Ludo.pdb
+C:\Users\Sde03873\Documents\Ludo\obj\Debug\Ludo.csprojResolveAssemblyReference.cache
+C:\Users\Sde03873\Documents\Ludo\obj\Debug\Ludo.csproj.CoreCompileInputs.cache
+C:\Users\Sde03873\Documents\Ludo\obj\Debug\Ludo.exe
+C:\Users\Sde03873\Documents\Ludo\obj\Debug\Ludo.pdb
