@@ -7,32 +7,24 @@ namespace Ludo
     {
         
         private int SpillereId;
-        private string navn;
+        private string Navn;
         private colors clr;
 
         // ny spiller
         public Spillere(int id, string spillernavn, colors farve)
         {
             this.SpillereId = id;
-            this.navn = spillernavn;
+            this.Navn = spillernavn;
             this.clr = farve;
         }
         
-        //spillernes farve
-        /*public string Farve(String farve)
+        public string GetName()
         {
-            switch(farve)
-            {
-                case Farve.Gul:
-                    return "gul";
-                case Farve.Grøn:
-                    return "Grøn";
-                case Farve.Blå:
-                    return "Blå";
-                case Farve.Rød:
-                    return "Rød";
+            get{
+                return this.Navn;
             }
-         }*/  
+        }
+
     }
             
         

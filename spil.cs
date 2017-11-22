@@ -8,6 +8,10 @@ namespace Ludo
        public Spil()
         {
             Console.WriteLine("Velkommen til Ludo");
+            Console.WriteLine(" ");
+            Console.WriteLine("Hvor mange spiller er i?");
+             
+
 
             Console.ReadKey();
         }   
