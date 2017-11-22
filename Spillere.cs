@@ -18,12 +18,19 @@ namespace Ludo
             this.clr = farve;
         }
         
-        public string GetName()
+        //spillerens navn
+        public string GetNavn
         {
             get{
                 return this.Navn;
             }
         }
+
+        public int GetSpillereId()
+        {
+            return this.SpillereId;
+        }
+
 
     }
             
