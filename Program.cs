@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 
 namespace Ludo
 {
-    public enum colors{rød, blå, gul, grøn}
-
     class Program
     {
         static void Main(string[] args)

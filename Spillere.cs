@@ -1,8 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 
 namespace Ludo
 {
+    public enum colors{rød, blå, gul, grøn}
+
     class Spillere
     {
         
@@ -21,21 +27,26 @@ namespace Ludo
         //spillerens navn
         public string GetNavn
         {
-            get{
+            get
+            {
                 return this.Navn;
             }
         }
 
+        //spillerens id
         public int GetSpillereId()
         {
             return this.SpillereId;
         }
 
+        //spillerens farve
+        public colors Farve()
+        {
+            return this.clr;
+        } 
 
+
+        
     }
-            
-        
-          
-        
-    
+
 }
