@@ -7,23 +7,28 @@ using System.Threading.Tasks;
 
 namespace Ludo
 {
-    public enum colors{rød, blå, gul, grøn}
+    public enum colors { rød, blå, gul, grøn }
 
     class Spillere
     {
-        
         private int SpillereId;
         private string Navn;
-        private colors clr;
+        private int v;
+        private colors grøn;
+
+        public Spillere(int v, colors grøn)
+        {
+            this.v = v;
+            this.grøn = grøn;
+        }
 
         // ny spiller
-        public Spillere(int id, string spillernavn, colors farve)
+        public Spillere(int id, string spillernavn, Spillere[] tkns)
         {
             this.SpillereId = id;
             this.Navn = spillernavn;
-            this.clr = farve;
         }
-        
+
         //spillerens navn
         public string GetNavn
         {
@@ -39,14 +44,6 @@ namespace Ludo
             return this.SpillereId;
         }
 
-        //spillerens farve
-        public colors Farve()
-        {
-            return this.clr;
-        } 
-
-
-        
     }
 
 }
