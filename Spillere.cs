@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-
 namespace Ludo
 {
     public enum colors { rød, blå, gul, grøn }
@@ -44,6 +42,15 @@ namespace Ludo
             return this.SpillereId;
         }
 
-    }
+        public colors colors
+        {
+            get;
+        }
 
+        public string Getbeskrivelse()
+        {
+            return "#" + this.SpillereId + " " + this.colors + " "+"spiller: " + this.GetNavn;
+        }
+
+    }
 }

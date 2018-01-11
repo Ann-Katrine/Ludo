@@ -10,14 +10,16 @@ namespace Ludo
     class Spil
     {
         private int deltager;
+        private char sdeltager;
         private Spillere[] spillere;
 
-
+        //Hvad der  hvises på skræmen
         public Spil()
         {
             Console.WriteLine("Velkommen til Ludo");
             setdeltager();
             lavspiller();
+            hvis_spiller();
 
             Console.ReadKey();
         }   
@@ -82,5 +84,14 @@ namespace Ludo
             return Spiller;
         }
         
+        //Hviser spiller
+        private void hvis_spiller()
+        {
+            Console.WriteLine("Okay, her er dine spiller");
+            foreach (Spillere pl in spillere)
+            {
+                Console.WriteLine(pl.Getbeskrivelse());
+            }
+        }
     }
 }
