@@ -45,6 +45,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="spil.cs" />
+    <Compile Include="Spillebaerk.cs" />
     <Compile Include="Spillere.cs" />
     <Compile Include="terning.cs" />
   </ItemGroup>

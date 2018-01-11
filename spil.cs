@@ -10,7 +10,6 @@ namespace Ludo
     class Spil
     {
         private int deltager;
-        private char sdeltager;
         private Spillere[] spillere;
 
         //Hvad der  hvises på skræmen
@@ -52,36 +51,36 @@ namespace Ludo
                 Console.WriteLine("Hvad hedder spiller#" + (i+1) + ": ");
                 string navn = Console.ReadLine();
 
-                Spillere[] tkns = Spillebraeker(i);
+                Spillebaerk[] tkns = tildelebraeker(i);
 
-                spillere[i] = new Spillere((i + 1), navn, tkns);
+                spillere[i] = new Spillere((i + 1), navn, tkns, tkns[i].getclr());
             }
         }
 
         //farver til spillerne
-        private Spillere[] Spillebraeker(int farveindex)
+        private Spillebaerk[] tildelebraeker(int farveindex)
         {
-            Spillere[] Spiller = new Spillere[4];
+            Spillebaerk[] Spillebaerker = new Spillebaerk[4];
 
             for (int i =0; i <3; i++)
             {
                 switch (farveindex)
                 {
                     case 0:
-                        Spiller[i] = new Spillere((i + 1), colors.blå);
+                        Spillebaerker[i] = new Spillebaerk((i + 1), colors.blå);
                         break;
                     case 1:
-                        Spiller[i] = new Spillere((i + 1), colors.grøn);
+                        Spillebaerker[i] = new Spillebaerk((i + 1), colors.grøn);
                         break;
                     case 2:
-                        Spiller[i] = new Spillere((i + 1), colors.gul);
+                        Spillebaerker[i] = new Spillebaerk((i + 1), colors.gul);
                         break;
                     case 3:
-                        Spiller[i] = new Spillere((i + 1), colors.rød);
+                        Spillebaerker[i] = new Spillebaerk((i + 1), colors.rød);
                         break;
                 }
             }
-            return Spiller;
+            return Spillebaerker;
         }
         
         //Hviser spiller

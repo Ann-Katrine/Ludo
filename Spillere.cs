@@ -11,20 +11,16 @@ namespace Ludo
     {
         private int SpillereId;
         private string Navn;
-        private int v;
-        private colors grøn;
-
-        public Spillere(int v, colors grøn)
-        {
-            this.v = v;
-            this.grøn = grøn;
-        }
+        private colors color;
+        private Spillebaerk[] tkns;
 
         // ny spiller
-        public Spillere(int id, string spillernavn, Spillere[] tkns)
+        public Spillere(int id, string spillernavn, Spillebaerk[] tkns, colors color)
         {
             this.SpillereId = id;
             this.Navn = spillernavn;
+            this.color = color;
+            this.tkns = tkns;
         }
 
         //spillerens navn
@@ -42,14 +38,14 @@ namespace Ludo
             return this.SpillereId;
         }
 
-        public colors colors
+        public colors Colors
         {
-            get;
+            get => this.color;
         }
 
         public string Getbeskrivelse()
         {
-            return "#" + this.SpillereId + " " + this.colors + " "+"spiller: " + this.GetNavn;
+            return "#" + this.SpillereId + " " + this.Colors + " "+"spiller: " + this.GetNavn;
         }
 
     }
