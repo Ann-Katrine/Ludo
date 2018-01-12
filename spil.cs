@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 
 namespace Ludo
 {
+    public enum spilregler { I_spil, faerdig };
 
     class Spil
     {
+        private spilregler state;
         private int deltager;
         private Spillere[] spillere;
+        private int spillerens_tur;
 
         //Hvad der  hvises på skræmen
         public Spil()
@@ -19,6 +22,8 @@ namespace Ludo
             setdeltager();
             lavspiller();
             hvis_spiller();
+            this.state = spilregler.I_spil;
+            skrifter();
 
             Console.ReadKey();
         }   
@@ -28,7 +33,7 @@ namespace Ludo
         {
             do
             {
-                Console.WriteLine("Hvor mange deltage 2-4?: ");
+                Console.WriteLine("Hvor mange deltager 2-4?: ");
                 try
                 {
                     deltager = Convert.ToInt32(Console.ReadLine());
@@ -62,7 +67,7 @@ namespace Ludo
         {
             Spillebaerk[] Spillebaerker = new Spillebaerk[4];
 
-            for (int i =0; i <3; i++)
+            for (int i =0; i <4; i++)
             {
                 switch (farveindex)
                 {
@@ -86,10 +91,26 @@ namespace Ludo
         //Hviser spiller
         private void hvis_spiller()
         {
-            Console.WriteLine("Okay, her er dine spiller");
+            Console.WriteLine("Okay, her er dine spillere");
             foreach (Spillere pl in spillere)
             {
                 Console.WriteLine(pl.Getbeskrivelse());
+            }
+        }
+
+        //hver spiller skrifter
+        public void skrifter()
+        {
+            while (this.state == spilregler.I_spil)
+            {
+                Spillere mintur = spillere[(spillerens_tur-1)];
+                Console.WriteLine(mintur.GetNavn + "'s tur");
+                Console.WriteLine("Det er " + mintur.Getbeskrivelse() + " tur");
+                do
+                {
+                    Console.WriteLine("Klar til at (k)aste? ");
+                } while (Console.ReadKey().KeyChar != 'k');
+                Console.WriteLine("du slog: ");
             }
         }
     }

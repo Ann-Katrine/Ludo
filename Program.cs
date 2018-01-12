@@ -12,6 +12,7 @@ namespace Ludo
         {
             //starter et nyt spil
             Spil ludo = new Spil();
+
         }
     }
 }

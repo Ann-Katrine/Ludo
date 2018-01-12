@@ -9,27 +9,34 @@ namespace Ludo
     class Terning
     {
         private int side;
-        private int sidste_vaerdi;
-        private Random rnd;
+        //private int sidste_vaerdi;
+        private int terningens_vaerdi;
+        private Random rnd = new Random();
 
-        public Terning(int nummer_af_sider)
+        //laver en "kaster terning"
+        public Terning()
         {
-            this.side  = nummer_af_sider;
-            this.rnd = new Random();
+            this.terningens_vaerdi = this.rnd.Next(1, 7);
         }
 
+        //metdoen, kaster terning
         public int Throw()
         {
-            int result;
+            this.terningens_vaerdi = this.rnd.Next(1, 7);
 
-            result = rnd.Next(1, (this.side + 1));
-            this.sidste_vaerdi = result;
-            return result;
+            for (int i = 3; i > 0; i--)
+            {
+                Console.WriteLine(" . ");
+                System.Threading.Thread.Sleep(500);
+            }
+
+            return this.terningens_vaerdi;
         }
 
-        public int Getsidste_vaerdi()
+        //Hviser hvad værdien blev
+        public int Getvaerdien()
         {
-            return this.sidste_vaerdi;
+            return this.terningens_vaerdi;
         }
     }
 }
