@@ -9,7 +9,6 @@ namespace Ludo
     class Terning
     {
         private int side;
-        //private int sidste_vaerdi;
         private int terningens_vaerdi;
         private Random rnd = new Random();
 
@@ -20,7 +19,7 @@ namespace Ludo
         }
 
         //metdoen, kaster terning
-        public int Throw()
+        public int kaste()
         {
             this.terningens_vaerdi = this.rnd.Next(1, 7);
 

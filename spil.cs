@@ -10,10 +10,11 @@ namespace Ludo
 
     class Spil
     {
-        private spilregler state;
+        private terningstate state;
         private int deltager;
         private Spillere[] spillere;
-        private int spillerens_tur;
+        private int spilleren_tur = 1;
+        private Terning terning = new Terning();
 
         //Hvad der  hvises på skræmen
         public Spil()
@@ -22,8 +23,8 @@ namespace Ludo
             setdeltager();
             lavspiller();
             hvis_spiller();
-            this.state = spilregler.I_spil;
-            skrifter();
+            this.state = terningstate.I_spil;
+            skifter();
 
             Console.ReadKey();
         }   
@@ -44,8 +45,8 @@ namespace Ludo
                 }
             } while (deltager < 2 || deltager >4);
         }
-
-        //laver en ny spiller
+        
+        //laver en ny spiller, virker ikke
         private void lavspiller()
         {
             Console.WriteLine("Skriv dit spillernavn?: ");
@@ -98,20 +99,46 @@ namespace Ludo
             }
         }
 
-        //hver spiller skrifter
-        public void skrifter()
+        //Hver spiller skrifter
+        public void skifter()
         {
-            while (this.state == spilregler.I_spil)
+            while (this.state == terningstate.I_spil)
             {
-                Spillere mintur = spillere[(spillerens_tur-1)];
+                Spillere mintur = spillere[(spilleren_tur-1)];
                 Console.WriteLine(mintur.GetNavn + "'s tur");
                 Console.WriteLine("Det er " + mintur.Getbeskrivelse() + " tur");
                 do
                 {
                     Console.WriteLine("Klar til at (k)aste? ");
                 } while (Console.ReadKey().KeyChar != 'k');
-                Console.WriteLine("du slog: ");
+                Console.WriteLine("du slog: " + terning.kaste().ToString());
+                Console.WriteLine(" ");
+                Hvis_kaste_muligheder(mintur.getbaerk());
+                break;
             }
         }
+
+        //ikke færdig
+        public void Hvis_kaste_muligheder(Spillebaerk[] baerk)
+        {
+            //int vælg = 0;
+
+            //Console.WriteLine("Her er dine brikker");
+            //foreach (Spillebaerk tk in baerk)
+            //{
+            //    Console.WriteLine("Brik #" + tk.getbaerkid() + "; placeret:" + tk.getstate());
+
+            //    switch (tk.getstate())
+            //    {
+            //        case terningstate.Hjemme:
+            //            if (Terning.getvaerdig() == 6)
+            //            {
+
+            //            }
+            //    }
+            //}
+
+        }
+
     }
 }
