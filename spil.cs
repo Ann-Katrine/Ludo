@@ -166,13 +166,22 @@ namespace Ludo
 
         private void skift_tur()
         {
-            Console.WriteLine("skifter spiller om ");
-            for (int i = 3; i > 0; i++)
+            Console.WriteLine(" ");
+            if(spilleren_tur == deltager)
             {
-                Console.WriteLine(" " + ToString() + " ");
+                spilleren_tur = 1;
+            }
+            else
+            {
+                deltager++;
+            }
+
+            Console.WriteLine("skifter spiller om ");
+            for (int i = 3; i > 0; i--)
+            {
+                Console.WriteLine( " ");
             }
             skifter();
         }
-
     }
 }
