@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace Ludo
 {
-    public enum terningstate { Hjemme, I_spil, Helle};
+    public enum terningstate { Hjemme, I_spil, Sikker};
 
     class Spillebaerk
     {
         private int baerkid;
-        private colors clr;
         private terningstate state;
+        private colors farve ;
 
         public Spillebaerk(int id, colors colors)
         {
             this.baerkid = id;
-            this.clr = colors;
+            this.farve = colors;
             this.state = terningstate.Hjemme;
         }
 
@@ -26,9 +26,9 @@ namespace Ludo
             return this.baerkid;
         }
 
-        public colors getclr()
+        public colors getFarve()
         {
-            return this.clr;
+            return this.farve;
         }
 
         public terningstate getstate()

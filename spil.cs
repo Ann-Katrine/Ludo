@@ -15,8 +15,10 @@ namespace Ludo
         private Spillere[] spillere;
         private int spilleren_tur = 1;
         private Terning terning = new Terning();
+        private colors getfarve;
+        private Spillebaerk[] baerk;
 
-        //Hvad der  hvises på skræmen
+        //Hvad der  vises på skræmen
         public Spil()
         {
             Console.WriteLine("Velkommen til Ludo");
@@ -46,7 +48,7 @@ namespace Ludo
             } while (deltager < 2 || deltager >4);
         }
         
-        //laver en ny spiller, virker ikke
+        //laver en ny spiller
         private void lavspiller()
         {
             Console.WriteLine("Skriv dit spillernavn?: ");
@@ -59,7 +61,7 @@ namespace Ludo
 
                 Spillebaerk[] tkns = tildelebraeker(i);
 
-                spillere[i] = new Spillere((i + 1), navn, tkns, tkns[i].getclr());
+                spillere[i] = new Spillere((i + 1), navn, tkns, getfarve);
             }
         }
 
@@ -68,7 +70,7 @@ namespace Ludo
         {
             Spillebaerk[] Spillebaerker = new Spillebaerk[4];
 
-            for (int i =0; i <4; i++)
+            for (int i =0; i <=3; i++)
             {
                 switch (farveindex)
                 {
@@ -118,26 +120,58 @@ namespace Ludo
             }
         }
 
-        //ikke færdig
         public void Hvis_kaste_muligheder(Spillebaerk[] baerk)
         {
-            //int vælg = 0;
+            int valg = 0;
 
-            //Console.WriteLine("Her er dine brikker");
-            //foreach (Spillebaerk tk in baerk)
-            //{
-            //    Console.WriteLine("Brik #" + tk.getbaerkid() + "; placeret:" + tk.getstate());
+            Console.WriteLine("Her er dine brikker");
+            foreach (Spillebaerk sb in baerk)
+            {
+                Console.WriteLine("Brik #" + sb.getbaerkid() + "; placeret:" + sb.getstate());
+                switch (sb.getstate())
+                {
+                    case terningstate.Hjemme:
+                        if (terning.Getvaerdien() == 6)
+                        {
+                            Console.WriteLine(" - Kan spilles");
+                            valg++;
+                        }
+                        else
+                        {
+                            Console.WriteLine(" - Kan ikke spilles");
+                        }
+                        break;
+                    case terningstate.I_spil:
+                        Console.WriteLine(" - Kan spilles");
+                        valg++;
+                        break;
+                    case terningstate.Sikker:
+                        Console.WriteLine(" - kan spilles");
+                        valg++;
+                        break;
+                }
+                Console.WriteLine("");
+            }
+            Console.WriteLine("");
+            Console.WriteLine("Du har " + valg.ToString() + " muligheder i denne tur.");
+            if (valg == 0)
+            {
+                this.skift_tur();
+            }
+            else
+            {
+                Console.WriteLine("Vælg den spiller du vil spille med.");
+            }
+        }
 
-            //    switch (tk.getstate())
-            //    {
-            //        case terningstate.Hjemme:
-            //            if (Terning.getvaerdig() == 6)
-            //            {
-
-            //            }
-            //    }
-            //}
-
+        private void skift_tur()
+        {
+            Console.WriteLine("skifter spiller om ");
+            for (int i = 3; i > 0; i++)
+            {
+                Console.WriteLine(" " + ToString() + " ");
+            }
+            skifter();
         }
 
     }

@@ -8,7 +8,7 @@ namespace Ludo
 {
     class Terning
     {
-        private int side;
+
         private int terningens_vaerdi;
         private Random rnd = new Random();
 
