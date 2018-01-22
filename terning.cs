@@ -23,11 +23,7 @@ namespace Ludo
         {
             this.terningens_vaerdi = this.rnd.Next(1, 7);
 
-            for (int i = 3; i > 0; i--)
-            {
-                Console.WriteLine(" . ");
-                System.Threading.Thread.Sleep(500);
-            }
+            Console.WriteLine(" ");
 
             return this.terningens_vaerdi;
         }

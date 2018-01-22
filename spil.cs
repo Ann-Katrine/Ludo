@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ludo
 {
-    public enum spilregler { I_spil, faerdig };
+    public enum spilregler { I_spil, slut };
 
     class Spil
     {
@@ -15,10 +15,10 @@ namespace Ludo
         private Spillere[] spillere;
         private int spilleren_tur = 1;
         private Terning terning = new Terning();
-        private colors getfarve;
+        public colors Colors;
         private Spillebaerk[] baerk;
 
-        //Hvad der  vises på skræmen
+        //Hvad der vises på skræmen
         public Spil()
         {
             Console.WriteLine("Velkommen til Ludo");
@@ -48,24 +48,24 @@ namespace Ludo
             } while (deltager < 2 || deltager >4);
         }
         
-        //laver en ny spiller
+        //laver en ny spiller.
         private void lavspiller()
         {
             Console.WriteLine("Skriv dit spillernavn?: ");
             this.spillere = new Spillere[this.deltager];
 
-            for(int i = 0; i < deltager; i++)
+            for(int i = 0; i < this.deltager; i++)
             {
                 Console.WriteLine("Hvad hedder spiller#" + (i+1) + ": ");
                 string navn = Console.ReadLine();
 
                 Spillebaerk[] tkns = tildelebraeker(i);
 
-                spillere[i] = new Spillere((i + 1), navn, tkns, getfarve);
+                spillere[i] = new Spillere((i + 1), navn, tkns, tkns[i].BaerkColor());
             }
         }
 
-        //farver til spillerne
+        //farver til spillerne.
         private Spillebaerk[] tildelebraeker(int farveindex)
         {
             Spillebaerk[] Spillebaerker = new Spillebaerk[4];
@@ -113,8 +113,7 @@ namespace Ludo
                 {
                     Console.WriteLine("Klar til at (k)aste? ");
                 } while (Console.ReadKey().KeyChar != 'k');
-                Console.WriteLine("du slog: " + terning.kaste().ToString());
-                Console.WriteLine(" ");
+                Console.WriteLine("Du slog: " + terning.kaste().ToString());
                 Hvis_kaste_muligheder(mintur.getbaerk());
                 break;
             }
@@ -152,8 +151,11 @@ namespace Ludo
                 }
                 Console.WriteLine("");
             }
+
             Console.WriteLine("");
             Console.WriteLine("Du har " + valg.ToString() + " muligheder i denne tur.");
+
+            //Du har ikke noget valg skift til næste spiller.
             if (valg == 0)
             {
                 this.skift_tur();
@@ -173,13 +175,13 @@ namespace Ludo
             }
             else
             {
-                deltager++;
+                spilleren_tur++;
             }
 
-            Console.WriteLine("skifter spiller om ");
+            Console.WriteLine("Du har ikke noget valg, skifter til næste spiller ");
             for (int i = 3; i > 0; i--)
             {
-                Console.WriteLine( " ");
+                Console.WriteLine(" ");
             }
             skifter();
         }

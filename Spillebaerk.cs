@@ -12,13 +12,13 @@ namespace Ludo
     {
         private int baerkid;
         private terningstate state;
-        private colors farve ;
+        private colors color;
 
         public Spillebaerk(int id, colors colors)
         {
             this.baerkid = id;
-            this.farve = colors;
             this.state = terningstate.Hjemme;
+            this.color = colors;
         }
 
         public int getbaerkid()
@@ -26,14 +26,14 @@ namespace Ludo
             return this.baerkid;
         }
 
-        public colors getFarve()
-        {
-            return this.farve;
-        }
-
         public terningstate getstate()
         {
             return this.state;
+        }
+
+        public colors BaerkColor()
+        {
+            return this.color;
         }
     }
 }

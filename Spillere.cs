@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ludo
 {
-    public enum colors { rød, blå, gul, grøn }
+    public enum colors {  blå, grøn, gul, rød, }
 
     class Spillere
     {
@@ -46,7 +46,7 @@ namespace Ludo
 
         public string Getbeskrivelse()
         {
-            return "#" + this.SpillereId + " " + this.Colors + " "+"spiller: " + this.GetNavn;
+            return "#" + this.GetSpillereId() + " " + this.Colors + " " + "spiller: " + this.GetNavn;
         }
 
         public Spillebaerk[] getbaerk()
