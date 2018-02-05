@@ -46,7 +46,7 @@ namespace Ludo
 
         public string Getbeskrivelse()
         {
-            return "#" + this.GetSpillereId() + " " + this.Colors + " " + "spiller: " + this.GetNavn;
+            return "#" + GetSpillereId() + " " + Colors + " " + "spiller: " + GetNavn;
         }
 
         public Spillebaerk[] getbaerk()

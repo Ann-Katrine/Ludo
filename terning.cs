@@ -21,9 +21,8 @@ namespace Ludo
         //metdoen, kaster terning
         public int kaste()
         {
-            this.terningens_vaerdi = this.rnd.Next(1, 7);
-
             Console.WriteLine(" ");
+            this.terningens_vaerdi = this.rnd.Next(1, 7);
 
             return this.terningens_vaerdi;
         }
