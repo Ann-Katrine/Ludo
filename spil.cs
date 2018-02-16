@@ -54,7 +54,6 @@ namespace Ludo
         {
             Console.WriteLine("Skriv dit spillernavn?: ");
             this.spillere = new Spillere[this.deltager];
-
             for (int i = 0; i < this.deltager; i++)
             {
                 Console.WriteLine("Hvad hedder spiller#" + (i + 1) + ": ");
@@ -70,7 +69,6 @@ namespace Ludo
         private Spillebaerk[] tildelebraeker(int farveindex)
         {
             Spillebaerk[] Spillebaerker = new Spillebaerk[4];
-
             for (int i = 0; i <= 3; i++)
             {
                 switch (farveindex)
@@ -115,17 +113,19 @@ namespace Ludo
                 {
                     Console.WriteLine("Klar til at (k)aste? ");
                 } while (Console.ReadKey().KeyChar != 'k');
+                Console.WriteLine(" ");
                 Console.WriteLine("Du slog: " + terning.kaste().ToString());
                 hvis_muligheder(mintur.getbaerk());
                 break;
             }
         }
-
+        
+        //igang her
         public void hvis_muligheder(Spillebaerk[] baerk)
         {
-            Console.WriteLine("Her er dine brikker");
             int valg = 0;
-
+            Console.WriteLine("Her er dine brikker");
+            
             foreach (Spillebaerk sb in baerk)
             {
                 Console.WriteLine("Brik #" + sb.getbaerkid() + "; placeret:" + sb.getstate());
@@ -155,31 +155,19 @@ namespace Ludo
                 Console.WriteLine("Du har " + valg + " muligheder i denne tur.");
             }
 
-            //igang her
+            //enden skrifter du tur eller du skal bestemme hvilken brik du vil vælge.
             if (valg == 0)
             {
                 this.skift_tur();
             }
-            else
+            else 
             {
-                do
-                {
-                    Console.WriteLine("Vælg den spiller du vil spille med.");
-                    try
-                    {
-                        i = Convert.ToInt16(Console.ReadLine());
-                    }
-                    catch (Exception)
-                    {
-                        Console.WriteLine("Det er ikke den rigtige værdi, det skal være en af dine spiller.");
-                    }
-                } while (i < 1 || i > 4);
-                //brug brækkens id
+                this.valg_baerk();
             }
             Console.WriteLine("");
         }
 
-        private void skift_tur()
+        public void skift_tur()
         {
             Console.WriteLine(" ");
             if (spilleren_tur == deltager)
@@ -191,12 +179,44 @@ namespace Ludo
                 spilleren_tur++;
             }
             Console.WriteLine("Du har ikke noget valg, jeg skifter til næste spiller ");
+
             for (int i = 3; i > 0; i--)
             {
                 Console.WriteLine(" ");
             }
             skifter();
         }
-        
+
+        //igang her
+        public void valg_baerk()
+        {
+            do
+            {
+                Console.WriteLine("Vælg den brik du vil spille med.");
+                try
+                {
+                    i = Convert.ToInt16(Console.ReadLine());
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Der findes ikke nogen brik med den værdi, prøv igen.");
+                }
+            } while (i < 1 || i > 4);
+            Console.WriteLine("hej");
+
+            /* Her har jeg tænkt at man enden slutter eller gå vider i spil og skal have fundet en anden
+             komando man kan sætte ligemed-tegn foran.
+             - opgaver
+             Skal være noget med når alle 4 brikker har været hele vejen rundt skal spillet være slut, skal have fundet
+             en komando til det + have fundet en anden komando end "terning.getvaedien" til at vide at spillet er slut*/
+            if(terning.Getvaerdien() == 57)
+            {
+                Console.WriteLine("Du har vundet spillet");
+            }
+            else
+            {
+                skifter();
+            }
+        }                           
     }
 }

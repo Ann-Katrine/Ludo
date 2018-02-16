@@ -19,3 +19,10 @@ C:\Users\Sde03873\OneDrive - Syddansk Erhvervsskole\Ludo\obj\Debug\Ludo.csprojRe
 C:\Users\Sde03873\OneDrive - Syddansk Erhvervsskole\Ludo\obj\Debug\Ludo.csproj.CoreCompileInputs.cache
 C:\Users\Sde03873\OneDrive - Syddansk Erhvervsskole\Ludo\obj\Debug\Ludo.exe
 C:\Users\Sde03873\OneDrive - Syddansk Erhvervsskole\Ludo\obj\Debug\Ludo.pdb
+C:\Users\annx3683\OneDrive - Syddansk Erhvervsskole\Ludo\bin\Debug\Ludo.exe.config
+C:\Users\annx3683\OneDrive - Syddansk Erhvervsskole\Ludo\bin\Debug\Ludo.exe
+C:\Users\annx3683\OneDrive - Syddansk Erhvervsskole\Ludo\bin\Debug\Ludo.pdb
+C:\Users\annx3683\OneDrive - Syddansk Erhvervsskole\Ludo\obj\Debug\Ludo.csprojResolveAssemblyReference.cache
+C:\Users\annx3683\OneDrive - Syddansk Erhvervsskole\Ludo\obj\Debug\Ludo.csproj.CoreCompileInputs.cache
+C:\Users\annx3683\OneDrive - Syddansk Erhvervsskole\Ludo\obj\Debug\Ludo.exe
+C:\Users\annx3683\OneDrive - Syddansk Erhvervsskole\Ludo\obj\Debug\Ludo.pdb
