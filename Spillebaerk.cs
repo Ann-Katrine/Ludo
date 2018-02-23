@@ -10,28 +10,32 @@ namespace Ludo
 
     class Spillebaerk
     {
-        private int baerkid;
+        private int brikid;
         private terningstate state;
         private colors color;
+        private int i = 0;
 
         public Spillebaerk(int id, colors colors)
         {
-            this.baerkid = id;
+            this.brikid = id;
             this.state = terningstate.Hjemme;
             this.color = colors;
         }
 
-        public int getbaerkid()
+        //Her får brikken sit id
+        public int getbrikid()
         {
-            return this.baerkid;
+            return this.brikid;
         }
 
+        //Her finder man ud af hvor man så på pladen
         public terningstate getstate()
         {
             return this.state;
         }
 
-        public colors BaerkColor()
+        //Brikken får tildelt sin farve
+        public colors BrikColor()
         {
             return this.color;
         }

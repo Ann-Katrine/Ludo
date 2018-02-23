@@ -13,10 +13,10 @@ namespace Ludo
         private terningstate state;
         private int deltager;
         private Spillere[] spillere;
-        private int spilleren_tur = 1;
+        private int spilleren_tur = 0;
         private Terning terning = new Terning();
         private colors Colors;
-        private Spillebaerk[] baerk;
+        private Spillebaerk[] brik;
         private int i = 0;
         
         //Hvad der vises på skræmen
@@ -47,9 +47,11 @@ namespace Ludo
                     Console.WriteLine("Det er ikke den rigtige værdi, prøv igen.");
                 }
             } while (deltager < 2 || deltager > 4);
+
+
         }
 
-        //laver en ny spiller.
+        //Laver en ny spiller.
         private void lavspiller()
         {
             Console.WriteLine("Skriv dit spillernavn?: ");
@@ -61,11 +63,11 @@ namespace Ludo
 
                 Spillebaerk[] tkns = tildelebraeker(i);
 
-                spillere[i] = new Spillere((i + 1), navn, tkns, tkns[i].BaerkColor());
+                spillere[i] = new Spillere((i + 1), navn, tkns, tkns[i].BrikColor());
             }
         }
 
-        //farver til spillerne.
+        //Farver til spillerne.
         private Spillebaerk[] tildelebraeker(int farveindex)
         {
             Spillebaerk[] Spillebaerker = new Spillebaerk[4];
@@ -105,7 +107,7 @@ namespace Ludo
         {
             while (this.state == terningstate.I_spil)
             {
-                Spillere mintur = spillere[(spilleren_tur - 1)];
+                Spillere mintur = spillere[(spilleren_tur)];
                 Console.WriteLine(" ");
                 Console.WriteLine(mintur.GetNavn + "'s tur");
                 Console.WriteLine("Det er " + mintur.Getbeskrivelse() + " tur");
@@ -115,19 +117,19 @@ namespace Ludo
                 } while (Console.ReadKey().KeyChar != 'k');
                 Console.WriteLine(" ");
                 Console.WriteLine("Du slog: " + terning.kaste().ToString());
-                hvis_muligheder(mintur.getbaerk());
+                hvis_muligheder(mintur.getbrikker());
                 break;
             }
         }
         
-        public void hvis_muligheder(Spillebaerk[] baerk)
+        public void hvis_muligheder(Spillebaerk[] brik)
         {
             int valg = 0;
             Console.WriteLine("Her er dine brikker");
             
-            foreach (Spillebaerk sb in baerk)
+            foreach (Spillebaerk sb in brik)
             {
-                Console.WriteLine("Brik #" + sb.getbaerkid() + "; placeret:" + sb.getstate());
+                Console.WriteLine("Brik #" + sb.getbrikid() + "; placeret:" + sb.getstate());
                 switch (sb.getstate())
                 {
                     case terningstate.Hjemme:
@@ -161,7 +163,7 @@ namespace Ludo
             }
             else 
             {
-                this.valg_baerk();
+                this.valg_brik();
             }
             Console.WriteLine("");
         }
@@ -169,9 +171,9 @@ namespace Ludo
         public void skift_tur()
         {
             Console.WriteLine(" ");
-            if (spilleren_tur == deltager)
+            if (spilleren_tur >= deltager - 1)
             {
-                spilleren_tur = 1;
+                spilleren_tur = 0;
             }
             else
             {
@@ -183,14 +185,16 @@ namespace Ludo
         }
 
         //igang her
-        public void valg_baerk()
+        public void valg_brik()
         {
             /*- opgaver
             ~Skal have noget til at sammerbejde med "do-whilen" til at jeg vælger en af de brikker man har at vælge imellem.
             ~Skal være noget med når alle 4 brikker har været hele vejen rundt skal spillet være slut, skal have fundet en
             komando til det.*/
 
-            do
+
+
+                do
             {
                 Console.WriteLine("Vælg den brik du vil spille med.");
                 try
@@ -203,17 +207,10 @@ namespace Ludo
                 }
             } while (i < 1 || i > 4);
 
+            //Den gør sådan at du kan vælge en brik
+            Spillebaerk tmpBrik = spillere[spilleren_tur].getbrik(i - 1);
+
             Console.WriteLine("hej");
-            
-            //Her skrifter til næste spiller
-            if (spilleren_tur == deltager)
-            {
-                spilleren_tur = 1;
-            }
-            else
-            {
-                spilleren_tur++;
-            }
 
             //Her har du enden vundet eller du går vider i spil
             if (terning.tallet() == 57)
@@ -222,7 +219,7 @@ namespace Ludo
             }
             else
             {
-                skifter();
+                skift_tur();
             } 
         }   
         

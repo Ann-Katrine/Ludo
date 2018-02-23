@@ -13,18 +13,18 @@ namespace Ludo
         private int SpillereId;
         private string Navn;
         private colors color;
-        private Spillebaerk[] braek;
+        private Spillebaerk[] brik;
 
-        // ny spiller
-        public Spillere(int id, string spillernavn, Spillebaerk[] braek, colors color)
+        // Ny spiller
+        public Spillere(int id, string spillernavn, Spillebaerk[] brik, colors color)
         {
             this.SpillereId = id;
             this.Navn = spillernavn;
             this.color = color;
-            this.braek = braek;
+            this.brik = brik;
         }
 
-        //spillerens navn
+        //Spillerens navn
         public string GetNavn
         {
             get
@@ -33,26 +33,30 @@ namespace Ludo
             }
         }
 
-        //spillerens id
+        //Spillerens id
         public int GetSpillereId()
         {
             return this.SpillereId;
         }
 
+        //Her få man sin farve
         public colors Colors
         {
             get => this.color;
         }
 
+        //Beskrivelse på spilleren
         public string Getbeskrivelse()
         {
             return "#" + GetSpillereId() + " " + Colors + " " + "spiller: " + GetNavn;
         }
 
-        public Spillebaerk[] getbaerk()
+        public Spillebaerk[] getbrikker()
         {
-            return this.braek;
+            return this.brik;
         }
+
+        public Spillebaerk getbrik(int brikz) => this.brik[brikz];
 
     }
 }
