@@ -17,7 +17,7 @@ namespace Ludo
         private Terning terning = new Terning();
         private colors Colors;
         private Spillebaerk[] baerk;
-        private int i;
+        private int i = 0;
         
         //Hvad der vises på skræmen
         public Spil()
@@ -120,7 +120,6 @@ namespace Ludo
             }
         }
         
-        //igang her
         public void hvis_muligheder(Spillebaerk[] baerk)
         {
             int valg = 0;
@@ -179,17 +178,18 @@ namespace Ludo
                 spilleren_tur++;
             }
             Console.WriteLine("Du har ikke noget valg, jeg skifter til næste spiller ");
-
-            for (int i = 3; i > 0; i--)
-            {
-                Console.WriteLine(" ");
-            }
+            
             skifter();
         }
 
         //igang her
         public void valg_baerk()
         {
+            /*- opgaver
+            ~Skal have noget til at sammerbejde med "do-whilen" til at jeg vælger en af de brikker man har at vælge imellem.
+            ~Skal være noget med når alle 4 brikker har været hele vejen rundt skal spillet være slut, skal have fundet en
+            komando til det.*/
+
             do
             {
                 Console.WriteLine("Vælg den brik du vil spille med.");
@@ -202,21 +202,29 @@ namespace Ludo
                     Console.WriteLine("Der findes ikke nogen brik med den værdi, prøv igen.");
                 }
             } while (i < 1 || i > 4);
-            Console.WriteLine("hej");
 
-            /* Her har jeg tænkt at man enden slutter eller gå vider i spil og skal have fundet en anden
-             komando man kan sætte ligemed-tegn foran.
-             - opgaver
-             Skal være noget med når alle 4 brikker har været hele vejen rundt skal spillet være slut, skal have fundet
-             en komando til det + have fundet en anden komando end "terning.getvaedien" til at vide at spillet er slut*/
-            if(terning.Getvaerdien() == 57)
+            Console.WriteLine("hej");
+            
+            //Her skrifter til næste spiller
+            if (spilleren_tur == deltager)
+            {
+                spilleren_tur = 1;
+            }
+            else
+            {
+                spilleren_tur++;
+            }
+
+            //Her har du enden vundet eller du går vider i spil
+            if (terning.tallet() == 57)
             {
                 Console.WriteLine("Du har vundet spillet");
             }
             else
             {
                 skifter();
-            }
-        }                           
+            } 
+        }   
+        
     }
 }

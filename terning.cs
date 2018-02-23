@@ -11,8 +11,9 @@ namespace Ludo
 
         private int terningens_vaerdi;
         private Random rnd = new Random();
+        private int j = 0;
 
-        //laver en "kaster terning"
+        //Laver en "kaster terning"
         public Terning()
         {
             this.terningens_vaerdi = this.rnd.Next(1, 7);
@@ -27,10 +28,16 @@ namespace Ludo
             return this.terningens_vaerdi;
         }
 
-        //Hviser hvad værdien blev
+        //Viser hvad værdien blev
         public int Getvaerdien()
         {
             return this.terningens_vaerdi;
+        }
+
+        //Viser hvor langt du er noget
+        public int tallet()
+        {
+            return this.terningens_vaerdi + j;
         }
     }
 }
