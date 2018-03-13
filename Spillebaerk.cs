@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ludo
 {
-    public enum terningstate { Hjemme, I_spil, Sikker};
+    public enum terningstate { Hjemme, I_spil, Sikker, Faerdig};
 
     class Spillebaerk
     {
