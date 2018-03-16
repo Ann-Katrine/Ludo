@@ -6,18 +6,19 @@ using System.Threading.Tasks;
 
 namespace Ludo
 {
-    public enum spilregler { I_spil, slut };
+    public enum Spilregler { I_spil, slut };
 
     class Spil
     {
-        private terningstate state;
-        private int deltager;
-        private Spillere[] spillere;
-        private int spilleren_tur = 0;
-        private Terning terning = new Terning();
-        private colors Colors;
-        private int i = 0;
-        
+        terningstate state;
+        int deltager;
+        Spillere[] spillere;
+        int spilleren_tur = 0;
+        Terning terning = new Terning();
+        colors Colors;
+        bool slår_3_gange = false;
+        int i = 0;
+
         //Hvad der vises på skræmen
         public Spil()
         {
@@ -66,7 +67,7 @@ namespace Ludo
             }
         }
 
-        //Farver til spillerne.
+        //Farverne til spillerne.
         private Spillebaerk[] tildelebraeker(int farveindex)
         {
             Spillebaerk[] Spillebaerker = new Spillebaerk[4];
@@ -91,7 +92,7 @@ namespace Ludo
             return Spillebaerker;
         }
 
-        //Hviser spiller
+        //Hviser spillerne
         private void hvis_spiller()
         {
             Console.WriteLine("Okay, her er dine spillere");
@@ -101,12 +102,11 @@ namespace Ludo
             }
         }
         
-        //Hver spiller skrifter
+        //Hver spiller slår
         private void skifter()
         {
             int i = 0;
             int j = 0;
-            bool slår_3_gange = false;
             while (this.state == terningstate.I_spil)
             { 
                 Spillere mintur = spillere[(spilleren_tur)];
@@ -115,7 +115,7 @@ namespace Ludo
                 Console.WriteLine("Det er " + mintur.Getbeskrivelse() + " tur");
                 foreach (Spillebaerk sb in mintur.getbrikker())
                 {
-                    if (sb.getstate() == terningstate.Hjemme || sb.getstate() == terningstate.Faerdig)
+                    if (sb.getstate == terningstate.Hjemme || sb.getstate == terningstate.Faerdig)
                     {
                         j++;
                     }
@@ -166,8 +166,8 @@ namespace Ludo
             
             foreach (Spillebaerk sb in brik)
             {
-                Console.WriteLine("Brik #" + sb.getbrikid() + "; placeret:" + sb.getstate() + " " );
-                switch (sb.getstate())
+                Console.WriteLine("Brik #" + sb.getbrikid() + "; placeret:" + sb.getstate + " " );
+                switch (sb.getstate)
                 {
                     case terningstate.Hjemme:
                         if (terning.Getvaerdien() == 6)
@@ -218,10 +218,9 @@ namespace Ludo
             if (spilleren_tur >= deltager - 1)
             {
                 spilleren_tur = 0;
-                bool slår_3_gange;
                 foreach (Spillebaerk sb in spillere[spilleren_tur].getbrikker())
                 {
-                    if (sb.getstate() == terningstate.Hjemme)
+                    if (sb.getstate == terningstate.Hjemme)
                     {
                         slår_3_gange = true;
                     }
@@ -239,16 +238,13 @@ namespace Ludo
         //igang her
         public void Valg_brik(Spillebaerk[] spillebaerk)
         {
-            /*- opgaver
+            /*- Opgaver
             ~Skal være sådan når du har valgt en brik, skal der komme til at stå hvad du slog, 
-            så man ved hvor langt man er(næsten færdig).
-            ~Skal være noget med når alle 4 brikker har været hele vejen rundt, skal spillet være slut, skal have fundet en 
-            komando til det.
-            ~Skal være sådan at man ikke kan hoppe den første brik over.*/
-
-            //igang her
-            //Den gør sådan at du kan vælge en brik
-            do
+            så man ved hvor langt man er("næsten færdig").
+            ~Skal være sådan at man ikke kan hoppe den første brik over, man spiller med.*/
+            //Vælg brik
+            bool Flytte = false;
+            while(Flytte == false)
             {
                 Console.WriteLine("Vælg den brik du vil spille med.");
                 try
@@ -259,18 +255,32 @@ namespace Ludo
                 {
                     Console.WriteLine("Der findes ikke nogen brik med den værdi, prøv igen.");
                 }
-            } while (i < 1 || i > 4);
-            Spillebaerk tmpBrik = spillere[spilleren_tur].getbrik(i - 1);
-
-            foreach (Spillebaerk sb in spillebaerk)
-            {
-                tmpBrik = sb.getstate().terningstate.I_spil;
+                if (terning.Getvaerdien() == 6)
+                {
+                    if (spillebaerk[(i - 1)].getstate == terningstate.Hjemme)
+                    {
+                        spillebaerk[(i - 1)].getstate = terningstate.I_spil;
+                        Flytte = true;
+                    }
+                    else if(spillebaerk[(i - 1)].getstate == terningstate.I_spil)
+                    {
+                        Console.WriteLine("Du er så langt i spillet, plads " + terning.tallet());
+                        Flytte = true;
+                    }
+                }
+                else if(spillebaerk[(i - 1)].getstate == terningstate.I_spil)
+                {
+                    Console.WriteLine("Du er så langt i spillet, plads " + terning.tallet());
+                    Flytte = true;
+                }
+                else
+                {
+                    Console.WriteLine("Du kan ikke ryke med denne brik.");
+                }
             }
 
-            Console.WriteLine("Du er så langt i spillet, plads " + terning.tallet());
-
-            //enden prøver du igen eller du skifter spiller
-            if(terning.Getvaerdien() == 6)
+            //Enden skal du at slå igen eller du skifter spiller
+            if (terning.Getvaerdien() == 6)
             {
                 skifter();
             }
@@ -280,10 +290,9 @@ namespace Ludo
                 if (spilleren_tur >= deltager - 1)
                 {
                     spilleren_tur = 0;
-                    bool slår_3_gange;
                     foreach (Spillebaerk sb in spillere[spilleren_tur].getbrikker())
                     {
-                        if (sb.getstate() == terningstate.Hjemme)
+                        if (sb.getstate == terningstate.Hjemme)
                         {
                             slår_3_gange = true;
                         }
@@ -300,3 +309,9 @@ namespace Ludo
 
     }
 }
+//kpop
+//83.054.654 - Who you 12:37 -> 13/3-18 ~ 83.147.070 12:38 -> 15/3-18
+//102.137 -bigbang 12:38 -> 13/3-18 ~ 2.174.877 12:31 -> 15/3-18
+//60.500.560 - heartbraker 12:48 -> 13/3-18 ~ 60.521.248 12:34 -> 15/3-18
+//28.104.613 - g-dragon song 14:50 -> 15/3-18
+//31.382.281 - heavn 14:38 -> 15/3-18

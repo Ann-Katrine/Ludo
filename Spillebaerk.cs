@@ -13,7 +13,6 @@ namespace Ludo
         private int brikid;
         private terningstate state;
         private colors color;
-        private int i = 0;
 
         public Spillebaerk(int id, colors colors)
         {
@@ -29,9 +28,16 @@ namespace Ludo
         }
 
         //Her finder man ud af hvor man så på pladen
-        public terningstate getstate()
+        public terningstate getstate
         {
-            return this.state;
+            get
+            {
+                return state;
+            }
+            set
+            {
+                state = value;
+            }
         }
 
         //Brikken får tildelt sin farve
