@@ -282,6 +282,7 @@ namespace Ludo
                         brik.felt = brik.felt + Terning_Vaerdi;
                     }
                 }
+                //enden kommer du til at stå i_spil eller så rykker du fordi du er i spil
                 if (terning.Getvaerdien() == 6)
                 {
                     if (spillebaerk[(i - 1)].getstate == terningstate.Hjemme)
@@ -295,11 +296,13 @@ namespace Ludo
                         Flytte = true;
                     }
                 }
+                //du rykker plads
                 else if (spillebaerk[(i - 1)].getstate == terningstate.I_spil)
                 {
                     Console.WriteLine("Du er så langt i spillet, plads " + (brik.felter_tilbage = brik.felter_tilbage - Terning_Vaerdi));
                     Flytte = true;
                 }
+                //hvis du endet kan
                 else
                 {
                     Console.WriteLine("Du kan ikke ryke med denne brik.");
