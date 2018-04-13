@@ -253,10 +253,6 @@ namespace Ludo
                     Console.WriteLine("Der findes ikke nogen brik med den værdi, prøv igen.");
                 }
                 brik = spillebaerk[i - 1];
-                if (brik.felter_tilbage - Terning_Vaerdi < 0)
-                {
-                    brik.felter_tilbage = (brik.felter_tilbage - Terning_Vaerdi) * -1;
-                }
                 //Den gør at man kan finde ud af om brikken er på brætet
                 if (brik.felt != null)
                 {
@@ -285,21 +281,38 @@ namespace Ludo
                 //enden kommer du til at stå i_spil eller så rykker du fordi du er i spil
                 if (terning.Getvaerdien() == 6)
                 {
-                    if (spillebaerk[(i - 1)].getstate == terningstate.Hjemme)
+                    if (brik.getstate == terningstate.Hjemme)
                     {
                         Ryk_Spillebrik_Ud(brik);
                         Flytte = true;
                     }
-                    else if (spillebaerk[(i - 1)].getstate == terningstate.I_spil)
+                    else if (brik.getstate == terningstate.I_spil)
                     {
                         Console.WriteLine("Du er så langt i spillet, plads " + ( brik.felter_tilbage = brik.felter_tilbage - Terning_Vaerdi));
                         Flytte = true;
                     }
+                    else if (brik.felter_tilbage - Terning_Vaerdi < 0)
+                    {
+                        Console.WriteLine("Du er så langt i spillet, plads " + (brik.felter_tilbage = (brik.felter_tilbage - Terning_Vaerdi) * -1));
+                    }
                 }
                 //du rykker plads
-                else if (spillebaerk[(i - 1)].getstate == terningstate.I_spil)
+                else if (brik.getstate == terningstate.I_spil)
                 {
-                    Console.WriteLine("Du er så langt i spillet, plads " + (brik.felter_tilbage = brik.felter_tilbage - Terning_Vaerdi));
+                    if (brik.felter_tilbage - Terning_Vaerdi < 0)
+                    {
+                        Console.WriteLine("Du er så langt i spillet, plads " + (brik.felter_tilbage = (brik.felter_tilbage - Terning_Vaerdi) * -1));
+                    }
+                    else
+                    {
+                        Console.WriteLine("Du er så langt i spillet, plads " + (brik.felter_tilbage = brik.felter_tilbage - Terning_Vaerdi));
+                    }
+                    Flytte = true;
+                }
+                //hvis du står på felt 0
+                else if(brik.felter_tilbage == 0)
+                {
+                    brik.getstate = terningstate.Faerdig;
                     Flytte = true;
                 }
                 //hvis du endet kan
@@ -307,33 +320,32 @@ namespace Ludo
                 {
                     Console.WriteLine("Du kan ikke ryke med denne brik.");
                 }
-
-                // enden slår igang eller går vidre
-                if (terning.Getvaerdien() == 6)
+            }
+            // enden slår igang eller går vidre
+            if (terning.Getvaerdien() == 6)
+            {
+                skifter();
+            }
+            else
+            {
+                //Gør sådan at man skrifter spiller
+                if (spilleren_tur >= deltager - 1)
                 {
-                    skifter();
+                    spilleren_tur = 0;
+                    foreach (Spillebaerk sb in spillere[spilleren_tur].getbrikker())
+                    {
+                        if (sb.getstate == terningstate.Hjemme)
+                        {
+                            slår_3_gange = true;
+                        }
+                    }
                 }
                 else
                 {
-                    //Gør sådan at man skrifter spiller
-                    if (spilleren_tur >= deltager - 1)
-                    {
-                        spilleren_tur = 0;
-                        foreach (Spillebaerk sb in spillere[spilleren_tur].getbrikker())
-                        {
-                            if (sb.getstate == terningstate.Hjemme)
-                            {
-                                slår_3_gange = true;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        spilleren_tur++;
-                    }
-
-                    skifter();
+                    spilleren_tur++;
                 }
+
+                skifter();
             }
         }
         /*- Opgaver
