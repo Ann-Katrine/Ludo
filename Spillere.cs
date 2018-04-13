@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Ludo
 {
-    public enum colors {  blå, grøn, gul, rød, }
+    public enum colors {  blå, grøn, gul, rød, ingen}
 
     class Spillere
     {
-        private int SpillereId;
-        private string Navn;
-        private colors color;
-        private Spillebaerk[] brik;
+        int SpillereId;
+        string Navn;
+        colors color;
+        Spillebaerk[] brik;
 
         // Ny spiller
         public Spillere(int id, string spillernavn, Spillebaerk[] brik, colors color)

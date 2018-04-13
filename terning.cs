@@ -9,9 +9,8 @@ namespace Ludo
     class Terning
     {
 
-        private int terningens_vaerdi;
-        private Random rnd = new Random();
-        private int j = 0;
+        int terningens_vaerdi;
+        Random rnd = new Random();
 
         //Laver en "kaster terning"
         public Terning()
@@ -32,16 +31,6 @@ namespace Ludo
         public int Getvaerdien()
         {
             return this.terningens_vaerdi;
-        }
-
-        //igang her
-        //Viser hvor langt du er noget
-        public int tallet()
-        {
-            /*- Opgaver
-            ~ Skal kunne gør sådan at den ligger tallene sammen så man ved hvor langt man er.*/
-
-            return this.terningens_vaerdi + j;
         }
     }
 }

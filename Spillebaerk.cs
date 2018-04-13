@@ -10,9 +10,11 @@ namespace Ludo
 
     class Spillebaerk
     {
-        private int brikid;
-        private terningstate state;
-        private colors color;
+        int brikid;
+        terningstate state;
+        colors color;
+        internal int? felt { get; set; } = null; //til brikken
+        internal int felter_tilbage { get; set; } = 56; // til spilleren
 
         public Spillebaerk(int id, colors colors)
         {
