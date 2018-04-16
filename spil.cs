@@ -284,35 +284,37 @@ namespace Ludo
                     if (brik.getstate == terningstate.Hjemme)
                     {
                         Ryk_Spillebrik_Ud(brik);
-                        Flytte = true;
+                    }
+                    else if (brik.felter_tilbage - Terning_Vaerdi < 0)
+                    {
+                        brik.felter_tilbage = (brik.felter_tilbage - Terning_Vaerdi) * -1;
+                        Console.WriteLine("Du er så langt i spillet, plads " + (brik.felter_tilbage));
+                    }
+                    else if (brik.felter_tilbage - Terning_Vaerdi == 0)
+                    {
+                        brik.getstate = terningstate.Faerdig;
                     }
                     else if (brik.getstate == terningstate.I_spil)
                     {
                         Console.WriteLine("Du er så langt i spillet, plads " + ( brik.felter_tilbage = brik.felter_tilbage - Terning_Vaerdi));
-                        Flytte = true;
                     }
-                    else if (brik.felter_tilbage - Terning_Vaerdi < 0)
-                    {
-                        Console.WriteLine("Du er så langt i spillet, plads " + (brik.felter_tilbage = (brik.felter_tilbage - Terning_Vaerdi) * -1));
-                    }
+                    Flytte = true;
                 }
-                //du rykker plads
                 else if (brik.getstate == terningstate.I_spil)
                 {
                     if (brik.felter_tilbage - Terning_Vaerdi < 0)
                     {
-                        Console.WriteLine("Du er så langt i spillet, plads " + (brik.felter_tilbage = (brik.felter_tilbage - Terning_Vaerdi) * -1));
+                        brik.felter_tilbage = (brik.felter_tilbage - Terning_Vaerdi) * -1;
+                        Console.WriteLine("Du er så langt i spillet, plads " + (brik.felter_tilbage));
+                    }
+                    else if (brik.felter_tilbage - Terning_Vaerdi == 0)
+                    {
+                        brik.getstate = terningstate.Faerdig;
                     }
                     else
                     {
                         Console.WriteLine("Du er så langt i spillet, plads " + (brik.felter_tilbage = brik.felter_tilbage - Terning_Vaerdi));
                     }
-                    Flytte = true;
-                }
-                //hvis du står på felt 0
-                else if(brik.felter_tilbage == 0)
-                {
-                    brik.getstate = terningstate.Faerdig;
                     Flytte = true;
                 }
                 //hvis du endet kan
@@ -321,6 +323,7 @@ namespace Ludo
                     Console.WriteLine("Du kan ikke ryke med denne brik.");
                 }
             }
+            
             // enden slår igang eller går vidre
             if (terning.Getvaerdien() == 6)
             {
@@ -351,8 +354,7 @@ namespace Ludo
         /*- Opgaver
             ~Skal være sådan at man kan slår spiller hjem.
             ~Skal være sådan at man kan stå på helle hvis to spiller står på samme sted.
-            ~Skal være sådan at man ikke kan hoppe over nogle af dine brikker, man spiller med.
-            ~Skal have lavet sådan at man ikke ryger ned på minus at man ryger op på plus igen hvis man ikke lander på 0.*/
+            ~Skal være sådan at man ikke kan hoppe over nogle af dine brikker, man spiller med.*/
         private void Ryk_Spillebrik_Ud(Spillebaerk brik)
         {
             brik.getstate = terningstate.I_spil;
