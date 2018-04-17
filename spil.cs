@@ -239,8 +239,9 @@ namespace Ludo
         {
             Spillebaerk brik;
             int i = 0;
-            //Sådan at du kan vælge brik
+            int slut = 0;
             bool Flytte = false;
+            //Sådan at du kan vælge brik
             while (Flytte == false)
             {
                 Console.WriteLine("Vælg den brik du vil spille med.");
@@ -253,7 +254,7 @@ namespace Ludo
                     Console.WriteLine("Der findes ikke nogen brik med den værdi, prøv igen.");
                 }
                 brik = spillebaerk[i - 1];
-                //Den gør at man kan finde ud af om brikken er på brætet
+                //Den gør at man kan finde ud af om brikken er på brætet(felt)
                 if (brik.felt != null)
                 {
                     //Så den går fra 51 til 0
@@ -261,7 +262,7 @@ namespace Ludo
                     {
                         for (int j = 0; j < Terning_Vaerdi; j++)
                         {
-                            // enden går du fra 51 til 0 eller gør sådan at du rykker en gang
+                            // Enden går du fra 51 til 0 eller gør sådan at du rykker en gang
                             if (brik.felt + 1 > 51)
                             {
                                 brik.felt = 0;
@@ -272,13 +273,13 @@ namespace Ludo
                             }
                         }
                     }
-                    //hvis ikke tæt på 51 går man bare vidrer
+                    //Hvis ikke tæt på 51 går man bare vidrer
                     else
                     {
                         brik.felt = brik.felt + Terning_Vaerdi;
                     }
                 }
-                //enden kommer du til at stå i_spil eller så rykker du fordi du er i spil
+                //Enden kommer du til at stå i_spil, være færdig eller så rykker du fordi du er i spil
                 if (terning.Getvaerdien() == 6)
                 {
                     if (brik.getstate == terningstate.Hjemme)
@@ -300,6 +301,7 @@ namespace Ludo
                     }
                     Flytte = true;
                 }
+                //Enden rykker du eller er du færdig
                 else if (brik.getstate == terningstate.I_spil)
                 {
                     if (brik.felter_tilbage - Terning_Vaerdi < 0)
@@ -317,15 +319,26 @@ namespace Ludo
                     }
                     Flytte = true;
                 }
-                //hvis du endet kan
+                //Hvis du endet kan
                 else
                 {
                     Console.WriteLine("Du kan ikke ryke med denne brik.");
                 }
             }
-            
-            // enden slår igang eller går vidre
-            if (terning.Getvaerdien() == 6)
+            foreach (Spillebaerk sb in spillebaerk)
+            {
+                if (sb.getstate == terningstate.Faerdig)
+                {
+                    slut++;
+                }
+            }
+
+            // Enden slå igang, går videre eller vundet
+            if (slut == 4)
+            {
+                Du_har_vundet();
+            }
+            else if (terning.Getvaerdien() == 6)
             {
                 skifter();
             }
@@ -351,10 +364,11 @@ namespace Ludo
                 skifter();
             }
         }
-        /*- Opgaver
+        /* - Opgaver
             ~Skal være sådan at man kan slår spiller hjem.
             ~Skal være sådan at man kan stå på helle hvis to spiller står på samme sted.
-            ~Skal være sådan at man ikke kan hoppe over nogle af dine brikker, man spiller med.*/
+            ~Skal være sådan at man ikke kan hoppe over nogle af dine brikker, man spiller med.
+            ~Skal have gjort sådan at man ikke spiller videre efter en har vundet*/
         private void Ryk_Spillebrik_Ud(Spillebaerk brik)
         {
             brik.getstate = terningstate.I_spil;
@@ -376,7 +390,7 @@ namespace Ludo
             skifter();
         }
 
-        public void flyt_brikken_til(Spillebaerk spillebaerk)
+        public void Flyt_brikken_til(Spillebaerk spillebaerk)
         {
             //så brikken kan komme i midten
             if (spillebaerk.felt != null)
@@ -386,6 +400,12 @@ namespace Ludo
                     spillebaerk.felt = null;
                 }
             }
+        }
+
+        public void Du_har_vundet()
+        {
+            Console.WriteLine("Du har vundet");
+            
         }
     }
 }
