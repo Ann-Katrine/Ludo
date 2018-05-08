@@ -8,12 +8,7 @@ namespace Ludo
 {
     class Felt
     {
-        internal colors OptagetFarve { get; set; } = colors.ingen;
-        internal List<Spillebaerk> Optagetbrik = new List<Spillebaerk>();
-
-        public Felt()
-        {
-
-        }
+        internal Colors OptagetFarve { get; set; } = Colors.ingen;
+        internal List<Spillebrik> Optagetbrik = new List<Spillebrik>();
     }
 }

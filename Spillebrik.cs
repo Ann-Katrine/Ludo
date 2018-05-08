@@ -6,31 +6,31 @@ using System.Threading.Tasks;
 
 namespace Ludo
 {
-    public enum terningstate { Hjemme, I_spil, Sikker, Faerdig};
+    public enum Terningstate { Hjemme, I_spil, Sikker, Faerdig};
 
-    class Spillebaerk
+    class Spillebrik
     {
         int brikid;
-        terningstate state;
-        colors color;
-        internal int? felt { get; set; } = null; //til brikken
-        internal int felter_tilbage { get; set; } = 56; // til spilleren
+        Terningstate state;
+        Colors color; 
+        internal int? Felt { get; set; } = null; //til brikken
+        internal int Felter_tilbage { get; set; } = 56; // til spilleren
 
-        public Spillebaerk(int id, colors colors)
+        public Spillebrik(int id, Colors colors)
         {
             this.brikid = id;
-            this.state = terningstate.Hjemme;
+            this.state = Terningstate.Hjemme;
             this.color = colors;
         }
 
         //Her får brikken sit id
-        public int getbrikid()
+        public int Getbrikid()
         {
             return this.brikid;
         }
 
         //Her finder man ud af hvor man så på pladen
-        public terningstate getstate
+        public Terningstate Getstate
         {
             get
             {
@@ -43,7 +43,7 @@ namespace Ludo
         }
 
         //Brikken får tildelt sin farve
-        public colors BrikColor()
+        public Colors BrikColor()
         {
             return this.color;
         }

@@ -10,31 +10,34 @@ namespace Ludo
 
     class Spil
     {
-        terningstate state;
+        Terningstate state;
         int deltager;
-        Spillere[] spillere;
+        Spiller[] spiller;
         int spilleren_tur = 0;
         Terning terning = new Terning();
-        colors Colors;
+        Colors Colors;
         bool slår_3_gange = false;
         Braedt braedt = new Braedt();
         int Terning_Vaerdi;
+        bool Flytte = false;
+        bool falsk_ryk = false;
+        int? Gammel_felt { get; set; }
 
         //Hvad der vises på skræmen
         public Spil()
         {
             Console.WriteLine("Velkommen til Ludo");
-            setdeltager();
-            lavspiller();
-            hvis_spiller();
-            this.state = terningstate.I_spil;
-            skifter();
+            Setdeltager();
+            Lavspiller();
+            Hvis_spiller();
+            this.state = Terningstate.I_spil;
+            Skifter();
 
             Console.ReadKey();
         }
 
         //Hvor mange deltager der er i spil.
-        private void setdeltager()
+        private void Setdeltager()
         {
             do
             {
@@ -53,40 +56,40 @@ namespace Ludo
         }
 
         //Laver en ny spiller.
-        private void lavspiller()
+        private void Lavspiller()
         {
             Console.WriteLine("Skriv dit spillernavn?: ");
-            this.spillere = new Spillere[this.deltager];
+            this.spiller = new Spiller[this.deltager];
             for (int i = 0; i < this.deltager; i++)
             {
                 Console.WriteLine("Hvad hedder spiller#" + (i + 1) + ": ");
                 string navn = Console.ReadLine();
 
-                Spillebaerk[] tkns = tildelebriker(i);
+                Spillebrik[] tkns = Tildelebriker(i);
 
-                spillere[i] = new Spillere((i + 1), navn, tkns, tkns[i].BrikColor());
+                spiller[i] = new Spiller((i + 1), navn, tkns, tkns[i].BrikColor());
             }
         }
 
         //Farverne til spillerne.
-        private Spillebaerk[] tildelebriker(int farveindex)
+        private Spillebrik[] Tildelebriker(int farveindex)
         {
-            Spillebaerk[] Spillebaerker = new Spillebaerk[4];
+            Spillebrik[] Spillebaerker = new Spillebrik[4];
             for (int i = 0; i <= 3; i++)
             {
                 switch (farveindex)
                 {
                     case 0:
-                        Spillebaerker[i] = new Spillebaerk((i + 1), colors.blå);
+                        Spillebaerker[i] = new Spillebrik((i + 1), Colors.gul);
                         break;
                     case 1:
-                        Spillebaerker[i] = new Spillebaerk((i + 1), colors.grøn);
+                        Spillebaerker[i] = new Spillebrik((i + 1), Colors.blå);
                         break;
                     case 2:
-                        Spillebaerker[i] = new Spillebaerk((i + 1), colors.gul);
+                        Spillebaerker[i] = new Spillebrik((i + 1), Colors.rød);
                         break;
                     case 3:
-                        Spillebaerker[i] = new Spillebaerk((i + 1), colors.rød);
+                        Spillebaerker[i] = new Spillebrik((i + 1), Colors.grøn);
                         break;
                 }
             }
@@ -94,29 +97,29 @@ namespace Ludo
         }
 
         //Hviser spillerne
-        private void hvis_spiller()
+        private void Hvis_spiller()
         {
             Console.WriteLine("Okay, her er dine spillere");
-            foreach (Spillere pl in spillere)
+            foreach (Spiller pl in spiller)
             {
                 Console.WriteLine(pl.Getbeskrivelse());
             }
         }
-        
+
         //Hver spiller slår
-        private void skifter()
+        private void Skifter()
         {
             int i = 0;
             int j = 0;
-            while (this.state == terningstate.I_spil)
-            { 
-                Spillere mintur = spillere[(spilleren_tur)];
+            while (this.state == Terningstate.I_spil)
+            {
+                Spiller mintur = spiller[(spilleren_tur)];
                 Console.WriteLine(" ");
                 Console.WriteLine(mintur.GetNavn + "'s tur");
                 Console.WriteLine("Det er " + mintur.Getbeskrivelse() + " tur");
-                foreach (Spillebaerk sb in mintur.getbrikker())
+                foreach (Spillebrik sb in mintur.Getbrikker())
                 {
-                    if (sb.getstate == terningstate.Hjemme || sb.getstate == terningstate.Faerdig)
+                    if (sb.Getstate == Terningstate.Hjemme || sb.Getstate == Terningstate.Faerdig)
                     {
                         j++;
                     }
@@ -131,7 +134,7 @@ namespace Ludo
                             Console.WriteLine("Klar til at (k)aste? ");
                         } while (Console.ReadKey().KeyChar != 'k');
                         Console.WriteLine(" ");
-                        Console.WriteLine("Du slog: " + terning.kaste().ToString());
+                        Console.WriteLine("Du slog: " + terning.Kaste().ToString());
                         Terning_Vaerdi = terning.Getvaerdien();
                         if (terning.Getvaerdien() == 6)
                         {
@@ -149,78 +152,79 @@ namespace Ludo
                     } while (Console.ReadKey().KeyChar != 'k');
 
                     Console.WriteLine(" ");
-                    Console.WriteLine("Du slog: " + terning.kaste().ToString());
+                    Console.WriteLine("Du slog: " + terning.Kaste().ToString());
                     Terning_Vaerdi = terning.Getvaerdien();
                 }
-                hvis_muligheder(mintur.getbrikker());
+                Hvis_muligheder(mintur.Getbrikker());
                 break;
             }
         }
-    
-        public void hvis_muligheder(Spillebaerk[] brik)
+
+        public void Hvis_muligheder(Spillebrik[] brik)
         {
             int valg = 0;
             Console.WriteLine("Her er dine brikker");
-            foreach (Spillebaerk sb in brik)
+            foreach (Spillebrik sb in brik)
             {
                 string ord;
-                ord = ("Brik #" + sb.getbrikid() + "; placeret:" + sb.getstate);
+                ord = ("Brik #" + sb.Getbrikid() + "; placeret:" + sb.Getstate);
                 Console.Write(ord);
-                switch (sb.getstate)
+                switch (sb.Getstate)
                 {
-                    case terningstate.Hjemme:
+                    case Terningstate.Hjemme:
                         if (terning.Getvaerdien() == 6)
                         {
                             Console.Write(" - Kan spilles");
-                            Console.Write(" " + (sb.felter_tilbage));
+                            Console.Write(" " + (sb.Felter_tilbage));
                             valg++;
                         }
                         else
                         {
                             Console.Write(" - Kan ikke spilles");
-                            Console.Write(" " + (sb.felter_tilbage));
+                            Console.Write(" " + (sb.Felter_tilbage));
                         }
                         break;
-                    case terningstate.I_spil:
+                    case Terningstate.I_spil:
                         Console.Write(" - Kan spilles");
-                        Console.Write(" " + (sb.felter_tilbage));
+                        Console.Write(" " + (sb.Felter_tilbage) + " " + (sb.Felt) + "<- er felt");
                         valg++;
                         break;
-                    case terningstate.Sikker:
+                    case Terningstate.Sikker:
                         Console.Write(" - Kan spilles");
-                        Console.Write(" " + (sb.felter_tilbage));
+                        Console.Write(" " + (sb.Felter_tilbage) + " " + (sb.Felt) + "<- er felt");
                         valg++;
                         break;
-                    case terningstate.Faerdig:
+                    case Terningstate.Faerdig:
                         Console.Write(" - Er i mål");
                         break;
                 }
                 Console.WriteLine(" ");
             }
-             Console.WriteLine("Du har " + valg + " muligheder i denne tur.");
+            Console.WriteLine("");
+            Console.WriteLine("Du har " + valg + " muligheder i denne tur.");
 
             //Enden skrifter du tur eller du skal bestemme hvilken brik du vil vælge.
             if (valg == 0)
             {
-                this.skift_tur();
+                this.Skift_tur();
             }
-            else 
+            else
             {
                 Valg_brik(brik);
             }
             Console.WriteLine("");
         }
 
-        public void skift_tur()
+        public void Skift_tur()
         {
             //Gør sådan at man skrifter spiller
             Console.WriteLine(" ");
             if (spilleren_tur >= deltager - 1)
             {
                 spilleren_tur = 0;
-                foreach (Spillebaerk sb in spillere[spilleren_tur].getbrikker())
+                foreach (Spillebrik sb in spiller[spilleren_tur].Getbrikker())
                 {
-                    if (sb.getstate == terningstate.Hjemme)
+                    if (sb.Getstate == Terningstate.Hjemme)
                     {
                         slår_3_gange = true;
                     }
@@ -231,116 +235,70 @@ namespace Ludo
                 spilleren_tur++;
             }
             Console.WriteLine("Du har ikke noget valg, jeg skifter til næste spiller ");
-            
-            skifter();
+
+            Skifter();
         }
 
-        public void Valg_brik(Spillebaerk[] spillebaerk)
+        public void Valg_brik(Spillebrik[] spillebrik)
         {
-            Spillebaerk brik;
+            Spillebrik brik;
             int i = 0;
             int slut = 0;
-            bool Flytte = false;
+
             //Sådan at du kan vælge brik
+            Flytte = false;
             while (Flytte == false)
             {
                 Console.WriteLine("Vælg den brik du vil spille med.");
-                try
+                do
                 {
-                    i = Convert.ToInt16(Console.ReadLine());
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("Der findes ikke nogen brik med den værdi, prøv igen.");
-                }
-                brik = spillebaerk[i - 1];
-                //Den gør at man kan finde ud af om brikken er på brætet(felt)
-                if (brik.felt != null)
-                {
-                    //Så den går fra 51 til 0
-                    if (brik.felt + Terning_Vaerdi > 51)
+                    try
                     {
-                        for (int j = 0; j < Terning_Vaerdi; j++)
-                        {
-                            // Enden går du fra 51 til 0 eller gør sådan at du rykker en gang
-                            if (brik.felt + 1 > 51)
-                            {
-                                brik.felt = 0;
-                            }
-                            else
-                            {
-                                brik.felt++;
-                            }
-                        }
+                        i = Convert.ToInt16(Console.ReadLine());
                     }
-                    //Hvis ikke tæt på 51 går man bare vidrer
-                    else
+                    catch (Exception)
                     {
-                        brik.felt = brik.felt + Terning_Vaerdi;
+                        Console.WriteLine("Der findes ikke nogen brik med den værdi, prøv igen.");
                     }
-                }
-                //Enden kommer du til at stå i_spil, være færdig eller så rykker du fordi du er i spil
-                if (terning.Getvaerdien() == 6)
+                } while (i < 1 || i > 4);
+                brik = spillebrik[i - 1];
+                Gammel_felt = brik.Felt;
+                if (Terning_Vaerdi == 6)
                 {
-                    if (brik.getstate == terningstate.Hjemme)
+                    if (brik.Getstate == Terningstate.Hjemme)
                     {
                         Ryk_Spillebrik_Ud(brik);
                     }
-                    else if (brik.felter_tilbage - Terning_Vaerdi < 0)
+                    else if (brik.Getstate == Terningstate.I_spil || brik.Getstate == Terningstate.Sikker)
                     {
-                        brik.felter_tilbage = (brik.felter_tilbage - Terning_Vaerdi) * -1;
-                        Console.WriteLine("Du er så langt i spillet, plads " + (brik.felter_tilbage));
+                        Ryk(brik);
                     }
-                    else if (brik.felter_tilbage - Terning_Vaerdi == 0)
-                    {
-                        brik.getstate = terningstate.Faerdig;
-                    }
-                    else if (brik.getstate == terningstate.I_spil)
-                    {
-                        Console.WriteLine("Du er så langt i spillet, plads " + ( brik.felter_tilbage = brik.felter_tilbage - Terning_Vaerdi));
-                    }
-                    Flytte = true;
                 }
-                //Enden rykker du eller er du færdig
-                else if (brik.getstate == terningstate.I_spil)
+                else if (brik.Getstate == Terningstate.I_spil || brik.Getstate == Terningstate.Sikker)
                 {
-                    if (brik.felter_tilbage - Terning_Vaerdi < 0)
-                    {
-                        brik.felter_tilbage = (brik.felter_tilbage - Terning_Vaerdi) * -1;
-                        Console.WriteLine("Du er så langt i spillet, plads " + (brik.felter_tilbage));
-                    }
-                    else if (brik.felter_tilbage - Terning_Vaerdi == 0)
-                    {
-                        brik.getstate = terningstate.Faerdig;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Du er så langt i spillet, plads " + (brik.felter_tilbage = brik.felter_tilbage - Terning_Vaerdi));
-                    }
-                    Flytte = true;
+                    Ryk(brik);
                 }
-                //Hvis du endet kan
                 else
                 {
                     Console.WriteLine("Du kan ikke ryke med denne brik.");
                 }
             }
-            foreach (Spillebaerk sb in spillebaerk)
+            foreach (Spillebrik sb in spillebrik)
             {
-                if (sb.getstate == terningstate.Faerdig)
+                if (sb.Getstate == Terningstate.Faerdig)
                 {
                     slut++;
                 }
             }
 
-            // Enden slå igang, går videre eller vundet
+            // Enden slå igang, går videre eller har vundet
             if (slut == 4)
             {
-                Du_har_vundet();
+                Tekst();
             }
-            else if (terning.Getvaerdien() == 6)
+            else if (Terning_Vaerdi == 6)
             {
-                skifter();
+                Skifter();
             }
             else
             {
@@ -348,9 +306,9 @@ namespace Ludo
                 if (spilleren_tur >= deltager - 1)
                 {
                     spilleren_tur = 0;
-                    foreach (Spillebaerk sb in spillere[spilleren_tur].getbrikker())
+                    foreach (Spillebrik sb in spiller[spilleren_tur].Getbrikker())
                     {
-                        if (sb.getstate == terningstate.Hjemme)
+                        if (sb.Getstate == Terningstate.Hjemme)
                         {
                             slår_3_gange = true;
                         }
@@ -361,51 +319,198 @@ namespace Ludo
                     spilleren_tur++;
                 }
 
-                skifter();
+                Skifter();
             }
-        }
-        /* - Opgaver
-            ~Skal være sådan at man kan slår spiller hjem.
-            ~Skal være sådan at man kan stå på helle hvis to spiller står på samme sted.
-            ~Skal være sådan at man ikke kan hoppe over nogle af dine brikker, man spiller med.
-            ~Skal have gjort sådan at man ikke spiller videre efter en har vundet*/
-        private void Ryk_Spillebrik_Ud(Spillebaerk brik)
-        {
-            brik.getstate = terningstate.I_spil;
-            switch (brik.BrikColor())
-            {
-                case colors.gul:
-                    brik.felt = 2;
-                    break;
-                case colors.blå:
-                    brik.felt = 15;
-                    break;
-                case colors.rød:
-                    brik.felt = 28;
-                    break;
-                case colors.grøn:
-                    brik.felt = 41;
-                    break;
-            }
-            skifter();
         }
 
-        public void Flyt_brikken_til(Spillebaerk spillebaerk)
+        private void Ryk_Spillebrik_Ud(Spillebrik brik)
         {
-            //så brikken kan komme i midten
-            if (spillebaerk.felt != null)
+            brik.Getstate = Terningstate.I_spil;
+            switch (brik.BrikColor())
             {
-                if (spillebaerk.felter_tilbage - terning.Getvaerdien() < 6)
+                case Colors.gul:
+                    brik.Felt = 2;
+                    break;
+                case Colors.blå:
+                    brik.Felt = 15;
+                    break;
+                case Colors.rød:
+                    brik.Felt = 28;
+                    break;
+                case Colors.grøn:
+                    brik.Felt = 41;
+                    break;
+            }
+            Tilfojer(brik);
+            Flytte = true;
+        }
+
+        private void Tilfojer(Spillebrik brik)
+        {
+            var braedtdims = braedt.BraedtFeltter[brik.Felt.Value];
+            //Brædet få en farve
+            if (braedtdims.OptagetFarve == Colors.ingen)
+            {
+                braedtdims.OptagetFarve = brik.BrikColor();
+                braedtdims.Optagetbrik.Add(brik);
+            }
+            else if (braedtdims.OptagetFarve == brik.BrikColor())
+            {
+                braedtdims.Optagetbrik.Add(brik);
+                braedtdims.Optagetbrik[0].Getstate = Terningstate.Sikker;
+                brik.Getstate = Terningstate.Sikker;
+            }
+            //Du bliver slået hjem på grund af sikker
+            else if (braedtdims.Optagetbrik[0].Getstate == Terningstate.Sikker)
+            {
+                brik.Felt = null;
+                brik.Getstate = Terningstate.Hjemme;
+                brik.Felter_tilbage = 56;
+                Console.WriteLine("Du begik selvmord!!!");
+                Console.WriteLine("Nej, jeg laver sjov du begik ikke selvmord, du døde bare og røg hjem.");
+            }
+            //Du slår nogen hjem
+            else
+            {
+                braedtdims.Optagetbrik[0].Getstate = Terningstate.Hjemme;
+                braedtdims.Optagetbrik[0].Felter_tilbage = 56;
+                braedtdims.Optagetbrik[0].Felt = null;
+                Console.WriteLine("Du slog modspilleren hjem");
+                braedtdims.Optagetbrik.RemoveAt(0);
+                braedtdims.Optagetbrik.Add(brik);
+                braedtdims.OptagetFarve = brik.BrikColor();
+            }
+            Flytte = true;
+        }
+
+        private void Tager_væk(Spillebrik brik)
+        {
+            var braedtdims = braedt.BraedtFeltter[Gammel_felt.Value];
+            if (brik.Getstate == Terningstate.Sikker)
+            {
+                if (braedtdims.Optagetbrik.Count > 2)
                 {
-                    spillebaerk.felt = null;
+                    braedtdims.Optagetbrik.Remove(brik);
+                    brik.Getstate = Terningstate.I_spil;
+                }
+                else
+                {
+                    brik.Getstate = Terningstate.I_spil;
+                    braedtdims.Optagetbrik.Remove(brik);
+                    braedtdims.Optagetbrik[0].Getstate = Terningstate.I_spil;
+                }
+            }
+            else
+            {
+                braedtdims.Optagetbrik.Remove(brik);
+                braedtdims.OptagetFarve = Colors.ingen;
+            }
+        }
+
+        public void Ryk(Spillebrik brik)
+        {
+            if (brik.Felt != null)
+            {
+                if (brik.Felter_tilbage - Terning_Vaerdi < 6)
+                {
+                    Tager_væk(brik);
+                    brik.Felt = null;
+                    Flytte = true;
+                }
+            }
+            if (brik.Felter_tilbage - Terning_Vaerdi < 0)
+            {
+                brik.Felter_tilbage = (brik.Felter_tilbage - Terning_Vaerdi) * -1;
+                Console.WriteLine("Du er så langt i spillet, plads " + (brik.Felter_tilbage));
+                Flytte = true;
+            }
+            else if (brik.Felter_tilbage - Terning_Vaerdi == 0)
+            {
+                brik.Felter_tilbage = 0;
+                brik.Getstate = Terningstate.Faerdig;
+                Flytte = true;
+            }
+            else
+            {
+                brik.Felter_tilbage = brik.Felter_tilbage - Terning_Vaerdi;
+                Console.WriteLine("Du er så langt i spillet, plads " + brik.Felter_tilbage);
+                Flytte = true;
+            }
+            //Den gør at man kan finde ud af om brikken er på brædtet(felt)
+            if (brik.Felt != null)
+            {
+                //Så den går fra 51 til 0
+                if (brik.Felt + Terning_Vaerdi > 51)
+                {
+                    for (int j = 0; j < Terning_Vaerdi; j++)
+                    {
+                        // Enden går du fra 51 til 0 eller gør sådan at du rykker en gang
+                        if (brik.Felt + 1 > 51)
+                        {
+                            brik.Felt = 0;
+                        }
+                        else
+                        {
+                            brik.Felt++;
+                        }
+                    }
+                }
+                //Hvis ikke tæt på 51 går man bare vidrer
+                else
+                {
+                    brik.Felt = brik.Felt + Terning_Vaerdi;
+                }
+                Flytte = true;
+                Tager_væk(brik);
+                Tilfojer(brik);
+            }
+        }
+
+        public void Ikke_hopper_over_Hinanden(Spillebrik brik)
+        {
+            int falskbrik = brik.Felt.Value;
+            for (int i = 1; i <= Terning_Vaerdi; i++)
+            {
+                if (falskbrik + 1 > 51)
+                {
+                    falskbrik = 0;
+                    if (braedt.BraedtFeltter[falskbrik].OptagetFarve == brik.BrikColor() & Terning_Vaerdi < i)
+                    {
+                        falsk_ryk = true;
+                        Console.WriteLine("Du kan ikke bruge denne brik, fordi at du ikke må hoppe over den foran dig, så vælg en ny brik.");
+                    }
+                    if (brik.BrikColor() == Colors.gul)
+                    {
+                        brik.Felt = 0;
+                    }
+                }
+                else
+                {
+                    if (braedt.BraedtFeltter[falskbrik + 1].OptagetFarve == brik.BrikColor() & Terning_Vaerdi < i)
+                    {
+                        falsk_ryk = true;
+                        Console.WriteLine("Du kan ikke bruge denne brik, fordi at du ikke må hoppe over den foran dig, så vælg en ny brik.");
+                    }
+                    if (falskbrik == 13 & brik.BrikColor() == Colors.blå)
+                    {
+                        break;
+                    }
+                    if (falskbrik == 26 & brik.BrikColor() == Colors.rød)
+                    {
+                        break;
+                    }
+                    if (falskbrik == 39 & brik.BrikColor() == Colors.grøn)
+                    {
+                        break;
+                    }
+                    falskbrik++;
                 }
             }
         }
 
-        public void Du_har_vundet()
+        public void Tekst()
         {
             Console.WriteLine("Du har vundet");
-            
         }
     }
-}
+}       

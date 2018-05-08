@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace Ludo
 {
-    public enum colors {  blå, grøn, gul, rød, ingen}
+    public enum Colors {  blå, grøn, gul, rød, ingen}
 
-    class Spillere
+    class Spiller
     {
         int SpillereId;
         string Navn;
-        colors color;
-        Spillebaerk[] brik;
+        Colors color;
+        Spillebrik[] brik;
 
         // Ny spiller
-        public Spillere(int id, string spillernavn, Spillebaerk[] brik, colors color)
+        public Spiller(int id, string spillernavn, Spillebrik[] brik, Colors color)
         {
             this.SpillereId = id;
             this.Navn = spillernavn;
@@ -40,7 +40,7 @@ namespace Ludo
         }
 
         //Her få man sin farve
-        public colors Colors
+        public Colors Colors
         {
             get => this.color;
         }
@@ -51,12 +51,12 @@ namespace Ludo
             return "#" + GetSpillereId() + " " + Colors + " " + "spiller: " + GetNavn;
         }
 
-        public Spillebaerk[] getbrikker()
+        public Spillebrik[] Getbrikker()
         {
             return this.brik;
         }
 
-        public Spillebaerk getbrik(int brikz) => this.brik[brikz];
+        public Spillebrik Getbrik(int brikz) => this.brik[brikz];
 
     }
 }
